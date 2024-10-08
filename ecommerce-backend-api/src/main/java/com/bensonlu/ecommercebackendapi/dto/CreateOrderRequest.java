@@ -7,13 +7,13 @@ import java.util.List;
 public class CreateOrderRequest {
     //Json to class
     @NotEmpty  //cant be empty
-    private List<BuyItem> buyItemList;
+    private List<CreateOrderByItem> createOrderByItemList;
 
-    public List<BuyItem> getBuyItemList() {
-        return buyItemList;
+    public List<CreateOrderByItem> getBuyItemList() {
+        return createOrderByItemList;
     }
 
-    public void setBuyItemList(List<BuyItem> buyItemList) {
-        this.buyItemList = buyItemList;
+    public void setBuyItemList(List<CreateOrderByItem> createOrderByItemList) {
+        this.createOrderByItemList = createOrderByItemList;
     }
 }

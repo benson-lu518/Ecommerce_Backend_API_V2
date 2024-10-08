@@ -1,20 +1,33 @@
 package com.bensonlu.ecommercebackendapi.model;
 
+import jakarta.persistence.*;
 import com.fasterxml.jackson.annotation.JsonIgnore;
 import com.fasterxml.jackson.annotation.JsonProperty;
 
 import java.util.Date;
 
+@Entity
+@Table(name = "user") // Maps this class to the 'user' table
 public class User {
+
+    @Id
+    @GeneratedValue(strategy = GenerationType.IDENTITY) // Auto-generate user ID
+    @Column(name = "user_id") // Map to 'user_id' column in the database
     private Integer userId;
 
-    //@JsonProperty("e_mail") //change the key name to e_mail
+    @Column(name = "email") // Optional, for clarity (not needed if field name matches)
     private String email;
 
-    @JsonIgnore //when transfer User object to Json password will be ignored
+    @JsonIgnore // Don't expose the password in JSON responses
+    @Column(name = "password") // Optional, maps to 'password' column in the database
     private String password;
+
+    @Column(name = "created_date", updatable = false) // Prevent updates after creation
     private Date createdDate;
+
+    @Column(name = "last_modified_date") // Allow updates
     private Date lastModifiedDate;
+
 
     public Integer getUserId() {
         return userId;

@@ -2,18 +2,47 @@ package com.bensonlu.ecommercebackendapi.model;
 
 import com.bensonlu.ecommercebackendapi.constant.ProductCategory;
 
+
+import jakarta.persistence.*;
+
 import java.util.Date;
 
+@Entity
+@Table(name = "product")
 public class Product {
+    @Id
+    @GeneratedValue(strategy = GenerationType.IDENTITY)
+    @Column(name = "product_id")
     private Integer productId;
+
+    @Column(name = "product_name")
     private String productName;
+
+    @Enumerated(value = EnumType.STRING)  // Storing enum as a String in the DB
+    @Column(name = "category")
     private ProductCategory category;
+
+    @Column(name = "image_url")
     private String imageUrl;
+
+    @Column(name = "price")
     private Integer price;
+
+    @Column(name = "stock")
     private Integer stock;
+
+    @Column(name = "description")
     private String description;
+
+    @Temporal(TemporalType.TIMESTAMP)
+    @Column(name = "created_date", updatable = false)
     private Date createdDate;
+
+    @Temporal(TemporalType.TIMESTAMP)
+    @Column(name = "last_modified_date")
     private Date lastModifiedDate;
+
+    // Getters and Setters
 
     public Integer getProductId() {
         return productId;
@@ -75,7 +104,7 @@ public class Product {
         return createdDate;
     }
 
-    public void setCreateDate(Date createdDate) {
+    public void setCreatedDate(Date createdDate) {
         this.createdDate = createdDate;
     }
 
@@ -85,5 +114,18 @@ public class Product {
 
     public void setLastModifiedDate(Date lastModifiedDate) {
         this.lastModifiedDate = lastModifiedDate;
+    }
+
+    // Lifecycle Callbacks for automatic date management
+
+    @PrePersist
+    protected void onCreate() {
+        createdDate = new Date();
+        lastModifiedDate = new Date();
+    }
+
+    @PreUpdate
+    protected void onUpdate() {
+        lastModifiedDate = new Date();
     }
 }

@@ -5,7 +5,7 @@ import java.util.List;
 public class Page<T> {
     private Integer limit;
     private Integer offset;
-    private Integer total;
+    private Long total;
     private List<T> results;
 
     public Integer getLimit() {
@@ -24,11 +24,11 @@ public class Page<T> {
         this.offset = offset;
     }
 
-    public Integer getTotal() {
+    public Long getTotal() {
         return total;
     }
 
-    public void setTotal(Integer total) {
+    public void setTotal(Long total) {
         this.total = total;
     }
 

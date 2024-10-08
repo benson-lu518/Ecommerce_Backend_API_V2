@@ -2,7 +2,7 @@ package com.bensonlu.ecommercebackendapi.dto;
 
 import jakarta.validation.constraints.NotNull;
 
-public class BuyItem {
+public class CreateOrderByItem {
     @NotNull
     private Integer productId;
     @NotNull

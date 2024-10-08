@@ -1,7 +1,7 @@
 package com.bensonlu.ecommercebackendapi.controller;
 
 import com.fasterxml.jackson.databind.ObjectMapper;
-import com.bensonlu.ecommercebackendapi.dto.BuyItem;
+import com.bensonlu.ecommercebackendapi.dto.CreateOrderByItem;
 import com.bensonlu.ecommercebackendapi.dto.CreateOrderRequest;
 import org.junit.jupiter.api.Test;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -18,7 +18,6 @@ import java.util.List;
 
 import static org.hamcrest.Matchers.*;
 import static org.hamcrest.Matchers.equalTo;
-import static org.junit.jupiter.api.Assertions.*;
 import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.jsonPath;
 import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.status;
 
@@ -36,19 +35,19 @@ public class OrderControllerTest {
     @Test
     public void createOrder_success() throws Exception {
         CreateOrderRequest createOrderRequest = new CreateOrderRequest();
-        List<BuyItem> buyItemList = new ArrayList<>();
+        List<CreateOrderByItem> createOrderByItemList = new ArrayList<>();
 
-        BuyItem buyItem1 = new BuyItem();
-        buyItem1.setProductId(1);
-        buyItem1.setQuantity(5);
-        buyItemList.add(buyItem1);
+        CreateOrderByItem createOrderByItem1 = new CreateOrderByItem();
+        createOrderByItem1.setProductId(1);
+        createOrderByItem1.setQuantity(5);
+        createOrderByItemList.add(createOrderByItem1);
 
-        BuyItem buyItem2 = new BuyItem();
-        buyItem2.setProductId(2);
-        buyItem2.setQuantity(2);
-        buyItemList.add(buyItem2);
+        CreateOrderByItem createOrderByItem2 = new CreateOrderByItem();
+        createOrderByItem2.setProductId(2);
+        createOrderByItem2.setQuantity(2);
+        createOrderByItemList.add(createOrderByItem2);
 
-        createOrderRequest.setBuyItemList(buyItemList);
+        createOrderRequest.setBuyItemList(createOrderByItemList);
 
         String json = objectMapper.writeValueAsString(createOrderRequest);
 
@@ -71,8 +70,8 @@ public class OrderControllerTest {
     @Test
     public void createOrder_illegalArgument_emptyBuyItemList() throws Exception {
         CreateOrderRequest createOrderRequest = new CreateOrderRequest();
-        List<BuyItem> buyItemList = new ArrayList<>();
-        createOrderRequest.setBuyItemList(buyItemList);
+        List<CreateOrderByItem> createOrderByItemList = new ArrayList<>();
+        createOrderRequest.setBuyItemList(createOrderByItemList);
 
         String json = objectMapper.writeValueAsString(createOrderRequest);
 
@@ -89,14 +88,14 @@ public class OrderControllerTest {
     @Test
     public void createOrder_userNotExist() throws Exception {
         CreateOrderRequest createOrderRequest = new CreateOrderRequest();
-        List<BuyItem> buyItemList = new ArrayList<>();
+        List<CreateOrderByItem> createOrderByItemList = new ArrayList<>();
 
-        BuyItem buyItem1 = new BuyItem();
-        buyItem1.setProductId(1);
-        buyItem1.setQuantity(1);
-        buyItemList.add(buyItem1);
+        CreateOrderByItem createOrderByItem1 = new CreateOrderByItem();
+        createOrderByItem1.setProductId(1);
+        createOrderByItem1.setQuantity(1);
+        createOrderByItemList.add(createOrderByItem1);
 
-        createOrderRequest.setBuyItemList(buyItemList);
+        createOrderRequest.setBuyItemList(createOrderByItemList);
 
         String json = objectMapper.writeValueAsString(createOrderRequest);
 
@@ -113,14 +112,14 @@ public class OrderControllerTest {
     @Test
     public void createOrder_productNotExist() throws Exception {
         CreateOrderRequest createOrderRequest = new CreateOrderRequest();
-        List<BuyItem> buyItemList = new ArrayList<>();
+        List<CreateOrderByItem> createOrderByItemList = new ArrayList<>();
 
-        BuyItem buyItem1 = new BuyItem();
-        buyItem1.setProductId(100);
-        buyItem1.setQuantity(1);
-        buyItemList.add(buyItem1);
+        CreateOrderByItem createOrderByItem1 = new CreateOrderByItem();
+        createOrderByItem1.setProductId(100);
+        createOrderByItem1.setQuantity(1);
+        createOrderByItemList.add(createOrderByItem1);
 
-        createOrderRequest.setBuyItemList(buyItemList);
+        createOrderRequest.setBuyItemList(createOrderByItemList);
 
         String json = objectMapper.writeValueAsString(createOrderRequest);
 
@@ -137,14 +136,14 @@ public class OrderControllerTest {
     @Test
     public void createOrder_stockNotEnough() throws Exception {
         CreateOrderRequest createOrderRequest = new CreateOrderRequest();
-        List<BuyItem> buyItemList = new ArrayList<>();
+        List<CreateOrderByItem> createOrderByItemList = new ArrayList<>();
 
-        BuyItem buyItem1 = new BuyItem();
-        buyItem1.setProductId(1);
-        buyItem1.setQuantity(10000);
-        buyItemList.add(buyItem1);
+        CreateOrderByItem createOrderByItem1 = new CreateOrderByItem();
+        createOrderByItem1.setProductId(1);
+        createOrderByItem1.setQuantity(10000);
+        createOrderByItemList.add(createOrderByItem1);
 
-        createOrderRequest.setBuyItemList(buyItemList);
+        createOrderRequest.setBuyItemList(createOrderByItemList);
 
         String json = objectMapper.writeValueAsString(createOrderRequest);
 

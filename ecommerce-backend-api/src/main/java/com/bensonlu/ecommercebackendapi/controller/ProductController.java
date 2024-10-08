@@ -2,7 +2,6 @@ package com.bensonlu.ecommercebackendapi.controller;
 
 import com.bensonlu.ecommercebackendapi.constant.ProductCategory;
 import com.bensonlu.ecommercebackendapi.dto.ProductQueryParams;
-import com.bensonlu.ecommercebackendapi.dto.ProductRequest;
 import com.bensonlu.ecommercebackendapi.model.Product;
 import com.bensonlu.ecommercebackendapi.service.ProductService;
 import com.bensonlu.ecommercebackendapi.util.Page;
@@ -15,6 +14,7 @@ import org.springframework.http.ResponseEntity;
 import org.springframework.validation.annotation.Validated;
 import org.springframework.web.bind.annotation.*;
 
+import java.util.ArrayList;
 import java.util.List;
 @Validated
 @RestController
@@ -23,17 +23,17 @@ public class ProductController {
     @Autowired
     private ProductService productService;
 
-    @GetMapping("/products") //query all products
+    @GetMapping("/products") //query all products: products?limit=3&offset=1&category=CAR&search=Audi
     public ResponseEntity<Page<Product>>getProducts(
             //conditional filtering
             @RequestParam(required = false) ProductCategory category,// FOOD,CAR, E_BOOK
-            @RequestParam(required = false) String search,
+            @RequestParam(required = false) String search, // search for product name
             //sorting type
             @RequestParam(defaultValue = "created_date") String orderBy,
             @RequestParam(defaultValue = "desc") String sort, //descending or ascending
             //paging
-            @RequestParam(defaultValue = "5") @Max(100) @Min(0) Integer limit,
-            @RequestParam(defaultValue = "0") @Min(0) Integer offset
+            @RequestParam(defaultValue = "10") @Max(100) @Min(0) Integer limit,
+            @RequestParam(defaultValue = "0") @Min(0) Integer offset // page number
             ){
         //set the value to the class
         ProductQueryParams productQueryParams=new ProductQueryParams();
@@ -47,7 +47,7 @@ public class ProductController {
         //get product list
         List<Product> productList=productService.getProducts(productQueryParams);
         //get total products num
-        Integer total=productService.countProduct(productQueryParams);
+        Long total=productService.countProduct();
 
         //the class to present on the page (will be changed to json)
         Page<Product> page=new Page<>();
@@ -56,12 +56,9 @@ public class ProductController {
         page.setTotal(total);
         page.setResults(productList);
 
-
         return ResponseEntity.status(HttpStatus.OK).body(page);
     }
-
-
-    @GetMapping("/products/{productId}") //query certain product
+    @GetMapping("/products/{productId}") //query  product by id
     public ResponseEntity<Product> getProduct(@PathVariable Integer productId){
         Product product = productService.getProductById(productId);
         if(product != null){
@@ -71,35 +68,44 @@ public class ProductController {
         }
     }
 
-    @PostMapping("/products") //create product
-    public ResponseEntity<Product> createProduct(@RequestBody @Valid ProductRequest productRequest){
-        Integer productId=productService.createProduct(productRequest);
-        Product product =productService.getProductById(productId);
+    @PostMapping("/products") //create multiple products
+    public ResponseEntity<List<Product>> createProducts(@RequestBody @Valid List<Product> productList){
 
-        return ResponseEntity.status(HttpStatus.CREATED).body(product);
+        List<Product> createdProducts = new ArrayList<>();
+
+        // Process each product request in the list
+        for (Product product : productList) {
+            Product productSaved = productService.createProduct(product);
+            createdProducts.add(productSaved);
+        }
+
+        return ResponseEntity.status(HttpStatus.CREATED).body(createdProducts);
     }
 
     @PutMapping("/products/{productId}") //update product
     public ResponseEntity<Product> updateProduct(@PathVariable Integer productId,
-                                                 @RequestBody @Valid ProductRequest productRequest){
+                                                 @RequestBody @Valid Product receivedProduct){
 
         //check product if exists
-        Product product =productService.getProductById(productId);
-
-        if (product==null){
+        Product checkedProduct =productService.getProductById(productId);
+        if (checkedProduct==null){
             return ResponseEntity.status(HttpStatus.NOT_FOUND).build();
-
         }
-        // update product infor
-        productService.updateProduct(productId,productRequest);
+        // update product
+        receivedProduct.setProductId(productId);
+        Product updatedProduct = productService.createProduct(receivedProduct);
 
-        Product updateProduct =productService.getProductById(productId);
-
-        return ResponseEntity.status(HttpStatus.OK).body(updateProduct);
+        return ResponseEntity.status(HttpStatus.OK).body(updatedProduct);
     }
 
-    @DeleteMapping("/products/{productId}")
+    @DeleteMapping("/products/{productId}") //delete product by id
     public ResponseEntity<?> deleteProduct(@PathVariable Integer productId){
+        //check product if exists
+        Product checkedProduct =productService.getProductById(productId);
+        if (checkedProduct==null){
+            return ResponseEntity.status(HttpStatus.NOT_FOUND).build();
+        }
+
         productService.deleteProductById(productId);
 
         return ResponseEntity.status(HttpStatus.NO_CONTENT).build();
