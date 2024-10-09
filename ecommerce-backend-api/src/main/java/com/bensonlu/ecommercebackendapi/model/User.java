@@ -3,6 +3,7 @@ package com.bensonlu.ecommercebackendapi.model;
 import jakarta.persistence.*;
 import com.fasterxml.jackson.annotation.JsonIgnore;
 import com.fasterxml.jackson.annotation.JsonProperty;
+import jakarta.validation.constraints.NotNull;
 
 import java.util.Date;
 
@@ -14,11 +15,12 @@ public class User {
     @GeneratedValue(strategy = GenerationType.IDENTITY) // Auto-generate user ID
     @Column(name = "user_id") // Map to 'user_id' column in the database
     private Integer userId;
-
+    @NotNull
     @Column(name = "email")
     private String email;
 
     @JsonProperty(access = JsonProperty.Access.WRITE_ONLY) // Ensures password is sent in request but not exposed in responses
+    @NotNull
     @Column(name = "password")
     private String password;
 

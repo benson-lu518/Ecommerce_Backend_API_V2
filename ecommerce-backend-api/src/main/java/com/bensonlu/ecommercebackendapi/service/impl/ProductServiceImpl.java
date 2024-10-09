@@ -19,8 +19,9 @@ public class ProductServiceImpl implements ProductService {
     @Autowired
     private ProductRepository productRepository;
     @Override
-    public Long countProduct() {
-        return  productRepository.count();
+    public Long countProduct(ProductQueryParams productQueryParams) {
+        Specification<Product> spec = ProductSpecification.filterByParams(productQueryParams);
+        return  productRepository.count(spec);
     }
     @Override
     public List<Product> getProducts(ProductQueryParams productQueryParams) {
@@ -35,6 +36,7 @@ public class ProductServiceImpl implements ProductService {
         Specification<Product> spec = ProductSpecification.filterByParams(productQueryParams);
         // Fetch the products using the specification
         Page<Product> productPage = productRepository.findAll(spec, pageable);
+
         // Return the page
         return productPage.getContent();
     }

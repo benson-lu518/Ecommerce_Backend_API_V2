@@ -22,8 +22,9 @@ public class OrderController {
     @Autowired
     private OrderService orderService;
 
+    // Get order list by userId
     @GetMapping("/users/{userId}/orders")
-    public ResponseEntity<Page<Order>> getOrdersByUserId(   //get order list by userId
+    public ResponseEntity<Page<Order>> getOrdersByUserId(
                                                             @PathVariable Integer userId,
                                                             @RequestParam(defaultValue = "10") @Max(100) @Min(0) Integer limit, //show limit page number
                                                             @RequestParam(defaultValue = "0") @Min(0) Integer offset //page number
@@ -48,14 +49,13 @@ public class OrderController {
         return ResponseEntity.status(HttpStatus.OK).body(page);
     }
 
-//
-//    //create multiple orders
+
+    //create multiple orders
     @PostMapping("/users/{userId}/orders")
     public ResponseEntity<?> createOrder(@PathVariable Integer userId,
                                          @RequestBody @Valid List<CreateOrderByItem> itemList){
 
         Order order =orderService.createOrder(userId, itemList);
-//        Order order=orderService.getOrderById(orderId); //according to orderId to get order info
         return ResponseEntity.status(HttpStatus.CREATED).body(order); //return order
     }
 }

@@ -23,7 +23,8 @@ public class ProductController {
     @Autowired
     private ProductService productService;
 
-    @GetMapping("/products") //query all products: products?limit=3&offset=1&category=CAR&search=Audi
+    // Query all products
+    @GetMapping("/products")
     public ResponseEntity<Page<Product>>getProducts(
             //conditional filtering
             @RequestParam(required = false) ProductCategory category,// FOOD,CAR, E_BOOK
@@ -47,7 +48,7 @@ public class ProductController {
         //get product list
         List<Product> productList=productService.getProducts(productQueryParams);
         //get total products num
-        Long total=productService.countProduct();
+        Long total=productService.countProduct(productQueryParams);
 
         //the class to present on the page (will be changed to json)
         Page<Product> page=new Page<>();
@@ -58,7 +59,8 @@ public class ProductController {
 
         return ResponseEntity.status(HttpStatus.OK).body(page);
     }
-    @GetMapping("/products/{productId}") //query  product by id
+    //Query  product by id
+    @GetMapping("/products/{productId}")
     public ResponseEntity<Product> getProduct(@PathVariable Integer productId){
         Product product = productService.getProductById(productId);
         if(product != null){
@@ -67,8 +69,8 @@ public class ProductController {
             return ResponseEntity.status(HttpStatus.NOT_FOUND).build();
         }
     }
-
-    @PostMapping("/products") //create multiple products
+    //create multiple products
+    @PostMapping("/products")
     public ResponseEntity<List<Product>> createProducts(@RequestBody @Valid List<Product> productList){
 
         List<Product> createdProducts = new ArrayList<>();
@@ -81,8 +83,8 @@ public class ProductController {
 
         return ResponseEntity.status(HttpStatus.CREATED).body(createdProducts);
     }
-
-    @PutMapping("/products/{productId}") //update product
+    //update product by id
+    @PutMapping("/products/{productId}")
     public ResponseEntity<Product> updateProduct(@PathVariable Integer productId,
                                                  @RequestBody @Valid Product receivedProduct){
 

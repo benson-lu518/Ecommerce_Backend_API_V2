@@ -4,6 +4,7 @@ import com.bensonlu.ecommercebackendapi.constant.ProductCategory;
 
 
 import jakarta.persistence.*;
+import jakarta.validation.constraints.NotNull;
 
 import java.util.Date;
 
@@ -15,22 +16,23 @@ public class Product {
     @Column(name = "product_id")
     private Integer productId;
 
+    @NotNull
     @Column(name = "product_name")
     private String productName;
 
     @Enumerated(value = EnumType.STRING)  // Storing enum as a String in the DB
+    @NotNull
     @Column(name = "category")
     private ProductCategory category;
-
+    @NotNull
     @Column(name = "image_url")
     private String imageUrl;
-
+    @NotNull
     @Column(name = "price")
     private Integer price;
-
+    @NotNull
     @Column(name = "stock")
     private Integer stock;
-
     @Column(name = "description")
     private String description;
 

@@ -49,12 +49,7 @@ public class OrderServiceImpl implements OrderService {
 
         return orderList;
     }
-//
-//    @Override
-//    public Order getOrderById(Integer orderId) {
-//        return null;
-//    }
-//
+
     @Transactional  //will rollback if throw exception
     @Override
     public Order createOrder(Integer userId, List<CreateOrderByItem> itemList) {
