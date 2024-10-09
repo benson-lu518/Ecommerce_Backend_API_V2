@@ -9,24 +9,23 @@ import com.bensonlu.ecommercebackendapi.repository.OrderItemRepository;
 import com.bensonlu.ecommercebackendapi.repository.OrderRepository;
 import com.bensonlu.ecommercebackendapi.repository.ProductRepository;
 import com.bensonlu.ecommercebackendapi.service.OrderService;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.data.domain.PageRequest;
 import org.springframework.data.domain.Pageable;
 import org.springframework.data.domain.Sort;
-import org.springframework.http.HttpStatus;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
-import org.springframework.web.server.ResponseStatusException;
 
 import java.util.Date;
 import java.util.List;
 
 @Service
 public class OrderServiceImpl implements OrderService {
-
+    private final static Logger log= LoggerFactory.getLogger(OrderServiceImpl.class);
     @Autowired
     private OrderRepository orderRepository;
-
     @Autowired
     private ProductRepository productRepository;
     @Autowired
@@ -63,11 +62,14 @@ public class OrderServiceImpl implements OrderService {
         int totalAmount = 0;
         for (CreateOrderByItem item : itemList) {
             // check if product exists
-            Product product = productRepository.findById(item.getProductId()).orElseThrow(
-                    () -> new RuntimeException("Product not found")
-            );
+            Product product = productRepository.findById(item.getProductId()).orElseThrow(() -> {
+                log.warn("Product with ID {} not found when creating order for userID {}", item.getProductId(), userId);
+                return new RuntimeException("Product not found");
+            });
             // Check if product stock is sufficient
             if (product.getStock() < item.getQuantity()) {
+                log.warn("Insufficient stock for productID {} for userID {}: required {}, available {}",
+                        item.getProductId(), userId, item.getQuantity(), product.getStock());
                 throw new RuntimeException("Insufficient stock for productId: " + item.getProductId());
             }
             // Deduct the stock

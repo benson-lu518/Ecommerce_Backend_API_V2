@@ -15,11 +15,11 @@ public class User {
     @Column(name = "user_id") // Map to 'user_id' column in the database
     private Integer userId;
 
-    @Column(name = "email") // Optional, for clarity (not needed if field name matches)
+    @Column(name = "email")
     private String email;
 
-    @JsonIgnore // Don't expose the password in JSON responses
-    @Column(name = "password") // Optional, maps to 'password' column in the database
+    @JsonProperty(access = JsonProperty.Access.WRITE_ONLY) // Ensures password is sent in request but not exposed in responses
+    @Column(name = "password")
     private String password;
 
     @Column(name = "created_date", updatable = false) // Prevent updates after creation
