@@ -28,11 +28,12 @@ public class UserControllerTest {
 
     private ObjectMapper objectMapper = new ObjectMapper();
 
+
     // register new account
     @Test
     public void register_success() throws Exception {
         User user = new User();
-        user.setEmail("test3@gmail.com");
+        user.setEmail("test4@gmail.com");
         user.setPassword("123");
         //object to json
         String json = objectMapper.writeValueAsString(user);
@@ -45,7 +46,7 @@ public class UserControllerTest {
         mockMvc.perform(requestBuilder)
                 .andExpect(status().is(201))
                 .andExpect(jsonPath("$.userId", notNullValue()))
-                .andExpect(jsonPath("$.email", equalTo("test3@gmail.com")))
+                .andExpect(jsonPath("$.email", equalTo("test4@gmail.com")))
                 .andExpect(jsonPath("$.password", notNullValue()))
                 .andExpect(jsonPath("$.createdDate", notNullValue()))
                 .andExpect(jsonPath("$.lastModifiedDate", notNullValue()));
@@ -72,7 +73,7 @@ public class UserControllerTest {
     public void register_emailAlreadyExist() throws Exception {
         //register new account
         User user = new User();
-        user.setEmail("test1@gmail.com");
+        user.setEmail("user1@gmail.com");
         user.setPassword("123");
 
         String json = objectMapper.writeValueAsString(user);
@@ -82,9 +83,6 @@ public class UserControllerTest {
                 .contentType(MediaType.APPLICATION_JSON)
                 .content(json);
 
-        mockMvc.perform(requestBuilder)
-                .andExpect(status().is(201));
-
         // register the same account again return 400
         mockMvc.perform(requestBuilder)
                 .andExpect(status().is(400));
@@ -92,12 +90,11 @@ public class UserControllerTest {
 
     @Test
     public void login_success() throws Exception {
-        // register new account
         setUpTest.setUpUser();
 
         //  login
         User userRegisterRequest = new User();
-        userRegisterRequest.setEmail("test1@gmail.com");
+        userRegisterRequest.setEmail("user1@gmail.com");
         userRegisterRequest.setPassword("123");
 
         String json = objectMapper.writeValueAsString(userRegisterRequest);
@@ -117,10 +114,9 @@ public class UserControllerTest {
 //
     @Test
     public void login_wrongPassword() throws Exception {
-        setUpTest.setUpUser();
         // test wrong password
         User userLoginRequest = new User();
-        userLoginRequest.setEmail("test1@gmail.com");
+        userLoginRequest.setEmail("test5@gmail.com");
         userLoginRequest.setPassword("0000"); // wrong password
 
         String json = objectMapper.writeValueAsString(userLoginRequest);

@@ -61,7 +61,7 @@ public class OrderServiceImpl implements OrderService {
         // check if user exists
         userRepository.findById(userId).orElseThrow(() -> {
             log.warn("User with ID {} not found when creating order", userId);
-            return new RuntimeException("User not found");
+            return new ResponseStatusException(HttpStatus.BAD_REQUEST, "User not found");
         });
 
         int totalAmount = 0;

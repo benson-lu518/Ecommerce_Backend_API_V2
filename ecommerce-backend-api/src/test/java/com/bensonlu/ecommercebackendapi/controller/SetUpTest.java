@@ -4,6 +4,7 @@ import com.bensonlu.ecommercebackendapi.constant.ProductCategory;
 import com.bensonlu.ecommercebackendapi.dto.CreateOrderByItem;
 import com.bensonlu.ecommercebackendapi.entity.Product;
 import com.bensonlu.ecommercebackendapi.entity.User;
+import com.bensonlu.ecommercebackendapi.repository.ProductRepository;
 import com.bensonlu.ecommercebackendapi.service.OrderService;
 import com.bensonlu.ecommercebackendapi.service.ProductService;
 import com.bensonlu.ecommercebackendapi.service.UserService;
@@ -22,7 +23,8 @@ public class SetUpTest {
     private ProductService productService;
     @Autowired
     private OrderService orderService;
-
+    @Autowired
+    private ProductRepository productRepository;
 
     @Transactional
     public void setUpProduct() {
@@ -56,11 +58,11 @@ public class SetUpTest {
     public void setUpUser() {
         // create  users
         User user1 = new User();
-        user1.setEmail("test1@gmail.com");
+        user1.setEmail("user1@gmail.com");
         user1.setPassword("123");
         userService.register(user1);
         User user2 = new User();
-        user2.setEmail("test2@gamil.com");
+        user2.setEmail("user2@gamil.com");
         user2.setPassword("123");
         userService.register(user2);
     }
