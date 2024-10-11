@@ -2,7 +2,7 @@ package com.bensonlu.ecommercebackendapi.controller;
 
 import com.bensonlu.ecommercebackendapi.constant.ProductCategory;
 import com.bensonlu.ecommercebackendapi.dto.ProductQueryParams;
-import com.bensonlu.ecommercebackendapi.model.Product;
+import com.bensonlu.ecommercebackendapi.entity.Product;
 import com.bensonlu.ecommercebackendapi.service.ProductService;
 import com.bensonlu.ecommercebackendapi.util.Page;
 import jakarta.validation.Valid;
@@ -34,7 +34,7 @@ public class ProductController {
             @RequestParam(defaultValue = "desc") String sort, //descending or ascending
             //paging
             @RequestParam(defaultValue = "10") @Max(100) @Min(0) Integer limit,
-            @RequestParam(defaultValue = "0") @Min(0) Integer offset // page number
+            @RequestParam(defaultValue = "1") @Min(1) Integer offset // page number
             ){
         //set the value to the class
         ProductQueryParams productQueryParams=new ProductQueryParams();
@@ -88,14 +88,8 @@ public class ProductController {
     public ResponseEntity<Product> updateProduct(@PathVariable Integer productId,
                                                  @RequestBody @Valid Product receivedProduct){
 
-        //check product if exists
-        Product checkedProduct =productService.getProductById(productId);
-        if (checkedProduct==null){
-            return ResponseEntity.status(HttpStatus.NOT_FOUND).build();
-        }
-        // update product
         receivedProduct.setProductId(productId);
-        Product updatedProduct = productService.createProduct(receivedProduct);
+        Product updatedProduct = productService.updateProduct(receivedProduct);
 
         return ResponseEntity.status(HttpStatus.OK).body(updatedProduct);
     }

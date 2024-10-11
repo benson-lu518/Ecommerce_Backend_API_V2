@@ -2,9 +2,7 @@ package com.bensonlu.ecommercebackendapi.service;
 
 import com.bensonlu.ecommercebackendapi.dto.CreateOrderByItem;
 import com.bensonlu.ecommercebackendapi.dto.OrderQueryParams;
-import com.bensonlu.ecommercebackendapi.dto.ProductQueryParams;
-import com.bensonlu.ecommercebackendapi.model.Order;
-import com.bensonlu.ecommercebackendapi.model.OrderItem;
+import com.bensonlu.ecommercebackendapi.entity.Order;
 
 import java.util.List;
 

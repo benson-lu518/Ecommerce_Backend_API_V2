@@ -1,5 +1,6 @@
-package com.bensonlu.ecommercebackendapi.model;
+package com.bensonlu.ecommercebackendapi.entity;
 
+import com.fasterxml.jackson.annotation.JsonIgnoreProperties;
 import jakarta.persistence.*;
 
 import java.util.Date;
@@ -22,6 +23,7 @@ public class Order {
     private Date lastModifiedDate;
     @OneToMany
     @JoinColumn(name = "order_id")
+    @JsonIgnoreProperties("order")
     private List<OrderItem> orderItemList;
 
     public Integer getOrderId() {

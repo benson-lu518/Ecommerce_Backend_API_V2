@@ -8,6 +8,7 @@ class EcommerceBackendApiApplicationTests {
 
     @Test
     void contextLoads() {
+
     }
 
 }

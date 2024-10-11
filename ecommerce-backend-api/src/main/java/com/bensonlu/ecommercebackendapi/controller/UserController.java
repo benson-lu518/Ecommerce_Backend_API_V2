@@ -1,6 +1,6 @@
 package com.bensonlu.ecommercebackendapi.controller;
 
-import com.bensonlu.ecommercebackendapi.model.User;
+import com.bensonlu.ecommercebackendapi.entity.User;
 import com.bensonlu.ecommercebackendapi.service.UserService;
 import jakarta.validation.Valid;
 import org.springframework.beans.factory.annotation.Autowired;

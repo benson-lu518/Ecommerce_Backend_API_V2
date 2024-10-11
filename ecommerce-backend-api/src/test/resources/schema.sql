@@ -18,7 +18,7 @@ CREATE TABLE IF NOT EXISTS `user`
     password           VARCHAR(256) NOT NULL,
     created_date       TIMESTAMP    NOT NULL,
     last_modified_date TIMESTAMP    NOT NULL
-    );
+);
 
 
 CREATE TABLE IF NOT EXISTS `order`
@@ -38,3 +38,5 @@ CREATE TABLE IF NOT EXISTS order_item
     quantity      INT NOT NULL,
     amount        INT NOT NULL
 );
+
+

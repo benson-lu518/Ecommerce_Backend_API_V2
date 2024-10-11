@@ -3,7 +3,7 @@ package com.bensonlu.ecommercebackendapi.controller;
 
 import com.bensonlu.ecommercebackendapi.dto.CreateOrderByItem;
 import com.bensonlu.ecommercebackendapi.dto.OrderQueryParams;
-import com.bensonlu.ecommercebackendapi.model.Order;
+import com.bensonlu.ecommercebackendapi.entity.Order;
 import com.bensonlu.ecommercebackendapi.service.OrderService;
 import com.bensonlu.ecommercebackendapi.util.Page;
 import jakarta.validation.Valid;
@@ -27,7 +27,7 @@ public class OrderController {
     public ResponseEntity<Page<Order>> getOrdersByUserId(
                                                             @PathVariable Integer userId,
                                                             @RequestParam(defaultValue = "10") @Max(100) @Min(0) Integer limit, //show limit page number
-                                                            @RequestParam(defaultValue = "0") @Min(0) Integer offset //page number
+                                                            @RequestParam(defaultValue = "1") @Min(1) Integer offset //page number
     ) {
 
         OrderQueryParams orderQueryParams = new OrderQueryParams();

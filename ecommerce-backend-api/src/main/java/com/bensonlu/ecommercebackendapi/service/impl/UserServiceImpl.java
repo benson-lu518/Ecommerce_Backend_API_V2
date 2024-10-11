@@ -1,7 +1,6 @@
 package com.bensonlu.ecommercebackendapi.service.impl;
 
-import com.bensonlu.ecommercebackendapi.model.User;
-import com.bensonlu.ecommercebackendapi.repository.OrderItemRepository;
+import com.bensonlu.ecommercebackendapi.entity.User;
 import com.bensonlu.ecommercebackendapi.repository.UserRepository;
 import com.bensonlu.ecommercebackendapi.service.UserService;
 import org.springframework.beans.factory.annotation.Autowired;

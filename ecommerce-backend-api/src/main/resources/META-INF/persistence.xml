@@ -8,7 +8,11 @@
     <persistence-unit name="myPersistenceUnit" transaction-type="RESOURCE_LOCAL">
         <provider>org.hibernate.jpa.HibernatePersistenceProvider</provider>
 
-        <class>com.bensonlu.ecommercebackendapi.model.Product</class>
+        <class>com.bensonlu.ecommercebackendapi.entity.Product</class>
+        <class>com.bensonlu.ecommercebackendapi.entity.User</class>
+        <class>com.bensonlu.ecommercebackendapi.entity.Order</class>
+        <class>com.bensonlu.ecommercebackendapi.entity.OrderItem</class>
+
         <!-- Add other entity classes here -->
 
         <properties>

@@ -1,5 +1,6 @@
-package com.bensonlu.ecommercebackendapi.model;
+package com.bensonlu.ecommercebackendapi.entity;
 
+import com.fasterxml.jackson.annotation.JsonIgnoreProperties;
 import jakarta.persistence.*;
 
 @Entity
@@ -11,6 +12,7 @@ public class OrderItem {
     private Integer orderItemId;
     @ManyToOne
     @JoinColumn(name = "order_id")
+    @JsonIgnoreProperties("orderItemList")
     private Order order;
     @ManyToOne
     @JoinColumn(name = "product_id")

@@ -1,14 +1,14 @@
-package com.bensonlu.ecommercebackendapi.model;
+package com.bensonlu.ecommercebackendapi.entity;
 
 import jakarta.persistence.*;
-import com.fasterxml.jackson.annotation.JsonIgnore;
 import com.fasterxml.jackson.annotation.JsonProperty;
+import jakarta.validation.constraints.Email;
 import jakarta.validation.constraints.NotNull;
 
 import java.util.Date;
 
 @Entity
-@Table(name = "user") // Maps this class to the 'user' table
+@Table(name = "`user`") // Maps this class to the 'user' table
 public class User {
 
     @Id
@@ -16,10 +16,10 @@ public class User {
     @Column(name = "user_id") // Map to 'user_id' column in the database
     private Integer userId;
     @NotNull
+    @Email
     @Column(name = "email")
     private String email;
 
-    @JsonProperty(access = JsonProperty.Access.WRITE_ONLY) // Ensures password is sent in request but not exposed in responses
     @NotNull
     @Column(name = "password")
     private String password;

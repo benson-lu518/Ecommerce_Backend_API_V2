@@ -1,7 +1,7 @@
 package com.bensonlu.ecommercebackendapi.service.impl;
 
 import com.bensonlu.ecommercebackendapi.dto.ProductQueryParams;
-import com.bensonlu.ecommercebackendapi.model.Product;
+import com.bensonlu.ecommercebackendapi.entity.Product;
 import org.springframework.data.jpa.domain.Specification;
 
 public class ProductSpecification {

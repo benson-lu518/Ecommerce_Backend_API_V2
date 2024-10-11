@@ -1,6 +1,6 @@
 package com.bensonlu.ecommercebackendapi.repository;
 
-import com.bensonlu.ecommercebackendapi.model.Product;
+import com.bensonlu.ecommercebackendapi.entity.Product;
 import org.springframework.data.jpa.repository.JpaRepository;
 import org.springframework.data.jpa.repository.JpaSpecificationExecutor;
 import org.springframework.stereotype.Repository;
