@@ -5,7 +5,9 @@ This project is an enhanced version of the original *Ecommerce-Backend-API-Servi
 
 - **CRUD Operations**: Products, Orders, Users
 - **Authentication**: User login and registration
-- **Order Management**: Order creation, updating, and deletion
+- **Order Management**: Order creation and querying, filtering
+- **Product Management**: Product creation, updating, deleting, querying, filtering
+  
 
 ## Framework
 
