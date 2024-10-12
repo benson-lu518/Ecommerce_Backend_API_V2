@@ -1,94 +1,96 @@
 # Ecommerce-Backend-API-Services-V2
 
-## About
-Used Java Spring Boot to build e-commerce backend API services and provide CRUD, product, item, user, log-in, register, etc.  
-Skills: JAVA, Spring Boot, JDBC, H2, JUnit, MySQL, REST API, intelliJ IDEA
+## Overview
+This project is an enhanced version of the original *Ecommerce-Backend-API-Services*. It has been updated to JPA from JDBC and Dockerized for easier deployment. The API provides essential e-commerce functionalities, including:
+
+- **CRUD Operations**: Products, Orders, Users
+- **Authentication**: User login and registration
+- **Order Management**: Order creation, updating, and deletion
+
 ## Framework
 
-![ecommercebackendapi drawio](https://user-images.githubusercontent.com/78866239/235349955-0e1789a8-1d58-45da-83dc-378f37daabb0.png)
+![ecommerce_backedn_api](https://github.com/user-attachments/assets/92feb922-a987-4ccc-a705-742847a3d9bc)
 
 
-# General Flow
+## Entity Relationships
+![DB Relationship](https://github.com/user-attachments/assets/1a46ce9e-fa79-431d-b7f3-f43c49281a46)
 
-1. **Receive Request:**
-   - Get the request from the client and extract the necessary variables from the request body.
+## Features
 
-2. **Set Variables to DTO:**
-   - Map the extracted variables to a Data Transfer Object (DTO), which stores the necessary data for the DAO (SQL) operations.
-
-3. **Pass DTO to Service Layer:**
-   - Pass the DTO to the Service layer.
-   - In the Service layer, apply any required business logic, such as conditional expressions, calculations, or validations.
-
-4. **Pass Data to DAO:**
-   - Pass the DTO or other relevant variables to the DAO (Data Access Object).
-   - The DAO is responsible for executing SQL queries.
-
-5. **SQL Execution in DAO:**
-   - If the SQL query returns multiple rows, use a RowMapper to map the ResultSet to a model object.
-   - Then, pass the mapped result to the `namedParameterJdbcTemplate` and return the result as a List.
-
-6. **(Optional) Paginate Results:**
-   - If pagination is required, set the List into a `Page` object.
-
-7. **Return Response to Frontend:**
-   - Return the response to the frontend using `ResponseEntity.status(HttpStatus.OK).body()`, with the appropriate body content.
+- **Java Spring Boot Framework**: Utilizes Spring Boot for efficient and modular backend development.
+- **JPA for Database Interaction**: Provides object-relational mapping (ORM) and simplifies database access.
+- **MySQL Database**: Use MySQL as the relational database for managing product, order, order_item, and user data.
+- **Unit Testing with JUnit**: Comprehensive unit tests to ensure the reliability of the codebase.
+- **RESTful API**: Provides RESTful endpoints for client interaction (CRUD).
+- **Dockerized Setup**: Simplifies environment setup using Docker for easy deployment and scalability.
+- **JUnit**: Testing framework
+- **H2 Database**: In-memory database for testing
 
 
-## Product
-- Query product lists
-- Create/Read/Update/Delete(CRUD) products
 
-## User
-- Register
-- Login
+## Project Structure
 
-## Item
-- Order items
-- Query order lists
+- **Controller**: Manages API requests and routes them to appropriate services.
+- **Service**: Contains business logic for the API.
+- **Repository**: Handles data access through JPA repositories.
+- **Entity**: Represents data models (e.g., Product, Order, OrderItem, User).
+- **DTO (Data Transfer Objects)**: Simplifies the interaction between the `Controller`, `Service`, and `Repository`.
+- **Pagination**: Supports pagination to efficiently respond.
+- **ProductCategory**: Provides a way to categorize products using enum.
+- **Unit Tests**: Ensures the functionality and reliability of the services.
 
-## Unit Test
-- H2 Database
+## Requests
+
+### Product
+- **Query All Products**:  
+  **Endpoint**: `GET /products`  `GET /products?limit=5&offset=1&category=CAR&search=Audi&orderBy=createdDate&sort=asc`
+  **Description**: Retrieves all available products in the system. Supports pagination, sorting, searching, and orderby.
+
+- **Query Product by ID**:  
+  **Endpoint**: `GET /products/{productId}`  
+  **Description**: Retrieves details of a specific product by productId.
+
+- **Update Product**:  
+  **Endpoint**: `PUT /products/{productId}`  
+  **Description**: Updates an existing product's information based on productId.
+
+- **Delete Product**:  
+  **Endpoint**: `DELETE /products/{productId}`  
+  **Description**: Deletes a product from the system. 
+
+### Order
+- **Create Order**:  
+  **Endpoint**: `POST /orders`  
+  **Description**: Creates a new order for the user. Includes the list of [{productId, quantity}].
+
+- **Get Orders by User ID**:  
+  **Endpoint**: `GET /users/{userId}/orders`  `GET /users/{userId}/orders?offset=1&limit=3)`  
+  **Description**: Retrieves all orders placed by a specific user.
+
+### User
+- **Register**:  
+  **Endpoint**: `POST /users/register`  
+  **Description**: Registers a new user with their email, password `{email,password}` . Returns a confirmation message upon success.
+
+- **Login**:  
+  **Endpoint**: `POST /users/login`  
+  **Description**: To check if the user has been registered with their email, password `{email,password}` .
 
 
-## Database (MySQL)(JDBC)
-### Table
-### product 
-| column name | data type |
-|:--------:|:--------:|
-| product_id | INT |
-|product_name|VARCHAR(128)|
-|category|VARCHAR(32)|
-|image_url|VARCHAR(256)|
-|price|INT|
-|stock|INT|
-|description|VARCHAR(1024)|
-|created_date|TIMESTAMP|
-|last_modified_date|TIMESTAMP|
 
-### user
-| column name | data type |
-|:--------:|:--------:|
-|user_id|INT|
-|email|VARCHAR(256)|
-|password|VARCHAR(256)|
-|created_date|TIMESTAMP|
-|last_modified_date|TIMESTAMP|
- 
-### order
-| column name | data type |
-|:--------:|:--------:|
-|order_id|INT|
-|user_id|INT|
-|total_amount|INT|
-|created_date|TIMESTAMP|
-|last_modified_date|TIMESTAMP|
- 
-### order_item
-| field name | data type |
-|:--------:|:--------:|
-|order_item_id|INT|
-|order_id|INT|
-|product_id|INT|
-|quantity|INT|
-|amount|INT|
+
+## Prerequisites
+
+- **Java 11+**
+- **Maven**
+- **Docker**
+- **MySQL**
+
+## Setup and Running Locally
+
+   ```bash
+   git clone https://github.com/yourusername/Ecommerce-Backend-API-Services-V2.git
+   cd Ecommerce-Backend-API-Services-V2
+   mvn clean install
+   docker-compose up --build
+   ```
