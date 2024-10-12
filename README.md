@@ -45,7 +45,8 @@ This project is an enhanced version of the original *Ecommerce-Backend-API-Servi
 
 ### Product
 - **Query All Products**:  
-  **Endpoint**: `GET /products`  `GET /products?limit=5&offset=1&category=CAR&search=Audi&orderBy=createdDate&sort=asc`
+  **Endpoint**:
+  `GET /products`  `GET /products?limit=5&offset=1&category=CAR&search=Audi&orderBy=createdDate&sort=asc`
   **Description**: Retrieves all available products in the system. Supports pagination, sorting, searching, and orderby.
 
 - **Query Product by ID**:  
