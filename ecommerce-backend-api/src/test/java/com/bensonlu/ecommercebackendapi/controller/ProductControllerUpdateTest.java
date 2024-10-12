@@ -5,7 +5,6 @@ import com.bensonlu.ecommercebackendapi.constant.ProductCategory;
 import com.bensonlu.ecommercebackendapi.entity.Product;
 import com.bensonlu.ecommercebackendapi.repository.ProductRepository;
 import com.fasterxml.jackson.databind.ObjectMapper;
-import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.test.autoconfigure.web.servlet.AutoConfigureMockMvc;
@@ -33,20 +32,6 @@ public class ProductControllerUpdateTest {
     private ProductRepository productRepository;
     @Autowired
     private  SetUpTest setUpTest ;
-
-//    @BeforeEach
-//    public void setUp() {
-//        Product product1 = new Product();
-//        product1.setProductName("Audi");
-//        product1.setCategory(ProductCategory.CAR);
-//        product1.setImageUrl("http://test");
-//        product1.setPrice(2000);
-//        product1.setStock(100);
-//        product1.setDescription("This is an car！");
-//
-//        Product savedProduct = productRepository.save(product1);
-////        Integer productId = savedProduct.getProductId(); // Get the correct ID
-//    }
 
 
     @Transactional

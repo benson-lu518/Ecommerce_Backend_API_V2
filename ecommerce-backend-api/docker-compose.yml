@@ -1,0 +1,30 @@
+version: '3.8'
+services:
+  db:
+    image: mysql:8.0
+    environment:
+      MYSQL_ROOT_PASSWORD: root
+      MYSQL_DATABASE: mall
+      MYSQL_USER: root
+      MYSQL_PASSWORD: shing0518
+    ports:
+      - "3307:3306"
+    networks:
+      - mall-network
+
+  app:
+    build:
+      context: .
+      dockerfile: Dockerfile
+    image: ecommerce
+    environment:
+      SPRING_DATASOURCE_URL: jdbc:mysql://db/mall?&serverTimezone=Asia/Taipei
+    ports:
+      - "8081:8081"
+    networks:
+      - mall-network
+    depends_on:
+      - db
+
+networks:
+   mall-network:
