@@ -1,7 +1,6 @@
 package com.bensonlu.ecommercebackendapi.controller;
 
 import com.bensonlu.ecommercebackendapi.dto.CreateOrderByItem;
-import com.bensonlu.ecommercebackendapi.dto.CreateOrderRequest;
 import com.fasterxml.jackson.databind.ObjectMapper;
 import org.junit.jupiter.api.Test;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -110,8 +109,7 @@ class OrderControllerCreateTest {
     @Test
     public void createOrder_productNotExist() throws Exception {
 
-        // create an order
-        CreateOrderRequest createOrderRequest = new CreateOrderRequest();
+        // create an order to the list
         List<CreateOrderByItem> createOrderByItemList = new ArrayList<>();
 
         CreateOrderByItem createOrderByItem1 = new CreateOrderByItem();
@@ -119,9 +117,7 @@ class OrderControllerCreateTest {
         createOrderByItem1.setQuantity(1);
         createOrderByItemList.add(createOrderByItem1);
 
-        createOrderRequest.setBuyItemList(createOrderByItemList);
-
-        String json = objectMapper.writeValueAsString(createOrderRequest);
+        String json = objectMapper.writeValueAsString(createOrderByItemList);
 
         RequestBuilder requestBuilder = MockMvcRequestBuilders
                 .post("/users/{userId}/orders", 1)
@@ -136,8 +132,7 @@ class OrderControllerCreateTest {
     @Test
     public void createOrder_stockNotEnough() throws Exception {
 
-        // create an order
-        CreateOrderRequest createOrderRequest = new CreateOrderRequest();
+        // create an order to the list
         List<CreateOrderByItem> createOrderByItemList = new ArrayList<>();
 
         CreateOrderByItem createOrderByItem1 = new CreateOrderByItem();
@@ -145,9 +140,7 @@ class OrderControllerCreateTest {
         createOrderByItem1.setQuantity(100000);
         createOrderByItemList.add(createOrderByItem1);
 
-        createOrderRequest.setBuyItemList(createOrderByItemList);
-
-        String json = objectMapper.writeValueAsString(createOrderRequest);
+        String json = objectMapper.writeValueAsString(createOrderByItemList);
 
         RequestBuilder requestBuilder = MockMvcRequestBuilders
                 .post("/users/{userId}/orders", 1)

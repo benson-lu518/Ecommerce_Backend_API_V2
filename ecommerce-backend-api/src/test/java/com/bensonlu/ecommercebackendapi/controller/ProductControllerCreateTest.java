@@ -77,7 +77,6 @@ public class ProductControllerCreateTest {
     @Transactional
     @Test
     public void deleteProduct_success() throws Exception {
-//        setUpTest.setUpProduct();
         RequestBuilder requestBuilder = MockMvcRequestBuilders
                 .delete("/products/{productId}", 3);
 
